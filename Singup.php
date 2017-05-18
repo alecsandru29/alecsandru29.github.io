@@ -1,7 +1,7 @@
 <html>
 <head>
 <link rel="icon" type="image/png" href="image/singup.png">
-<link rel="stylesheet" type="text/css" href="css/singup.css">
+<!--<link rel="stylesheet" type="text/css" href="css/singup.css">-->
 <title>Singup</title>
 </head>
 <body>
@@ -64,15 +64,56 @@
 	   && !preg_match("/0/", $password1))$pok=1;
    if($pok==1){echo("<p>Parola este gresita !</p>");$v=1;}
    
-   if($v==0)
-   {
-	   $id=7 . "." . $nume . "." . $prenume;
-	   if($sex=="masculin")
-		echo("<p> Salut ".$prenume.", ai fost inregistrat cu username-ul ".$id);
-	   else  
-		echo("<p> Salut ".$prenume.", ai fost inregistrata cu username-ul ".$id);
+   //conectare la baza de date
+	$host="localhost";
+	$user="root";
+	$password="";
+	$con=mysql_connect($host,$user,$password);
+	if(!$con) {
+		die('Not connect');
+	}
+	
+	$bd_selected=mysql_select_db("dulapp", $con);
+	if(!$bd_selected)
+	{
+		die("cant connect");
+	}
+
+	$result = mysql_query('select * from userdata order by Id desc LIMIT 1');
+	
+	if(!$result)  die('Error querying database.');
+	$ok=1;
+	if($v==1)echo("Error");else{
+		
+		$row = mysql_fetch_assoc($result);
+		$id = $row["Id"]+1;
+		$datanastere=$zi."-".$luna."-".$an;
+		if($sex=="masculin")$sex=1;else $sex=0;
+		if($pub=="da")$pub=1;else $pub=0;
+		$sql = "INSERT INTO userdata (Nume, Prenume, Data_Nastere , Pub ,Sex ,Id)
+		VALUES ('{$nume}', '{$prenume}','{$datanastere}','{$pub}','{$sex}','{$id}')";
+		if (!mysql_query($sql,$con ))
+		{
+			echo "Error: " . $sql . "<br>";
+			$ok=0;
+		}
+		$username=$id.".".$nume.".".$prenume;
+		$sql = "INSERT INTO logdata (Id,Username,Password) values ('{$id}','{$username}','{$password1}')";
+		if (!mysql_query($sql,$con ))
+		{
+			echo "Error: " . $sql . "<br>";
+			$ok=0;
+		}
+		if($ok==1){
+		if($sex=="1")
+			echo("<p> Salut ".$prenume.", ai fost inregistrat cu username-ul ".$username);
+		   else  
+			echo("<p> Salut ".$prenume.", ai fost inregistrata cu username-ul ".$username);
+		}else echo("Error");
 	   
-   }
+	}
+	
+	
 ?>
 </body>
 </html>
