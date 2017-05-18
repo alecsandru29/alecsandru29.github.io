@@ -1,14 +1,27 @@
+<?php session_start(); ?>
 <html>
 <head>
-<link rel="icon" type="image/png" href="image/login.png">
+<link rel="icon" type="image/png" href="image/icon.png">
 <link rel="stylesheet" type="text/css" href="css/login2.css">
 <title>Login</title>
 </head>
 <body>
 <?php
 	
-	$username=$_REQUEST["username"];
-	$password=$_REQUEST["password"];
+	$r = $_REQUEST["r"];
+	if($r==1)
+	{
+		$username=$_SESSION['username'];
+		$password=$_SESSION['password'];
+	}
+	else
+	{
+		$_SESSION['username'] = $_REQUEST["username"];
+		$_SESSION['password'] = $_REQUEST["password"];
+		$username=$_SESSION['username'];
+		$password=$_SESSION['password'];
+	}
+	$r=0;
 	$pok=0;
 	$v=0;
 	if (!$username) 
@@ -65,15 +78,17 @@
 		
 		?>
 		<form action="/DulApp/userdata.php" method="post">
-		<input type="hidden" name="username" value="<?php echo $username ?>">
-		<input type="hidden" name="password" value="<?php echo $password ?>">
 		<input type="hidden" name="pagina" value=1>
 		<input type="submit" value="Obiecte">
 		</form>
 		<form action="/DulApp/editare.php" method="post">
-		<input type="hidden" name="username" value="<?php echo $username ?>">
-		<input type="hidden" name="password" value="<?php echo $password ?>">
 		<input type="submit" value="Editare date personale">
+		</form>
+		<form action="/DulApp/editare3.php" method="post">
+		<input type="submit" value="Stergere Cont">
+		</form>
+		<form action="/DulApp/index.php" method="post">
+		<input type="submit" value="Deconectare">
 		</form>
 		<?php
 		echo("</div></div>");

@@ -1,29 +1,17 @@
+<?php session_start(); ?>
 <html>
 <head>
-<link rel="icon" type="image/png" href="image/login.png">
+<link rel="icon" type="image/png" href="image/icon.png">
 <link rel="stylesheet" type="text/css" href="css/userdata.css">
-<title>Userdata</title>
+<title>Dulapuri</title>
 <script type="text/javascript" src="functii.js"></script>
 </head>
 <body>
 <?php
 	
-	$username=$_REQUEST["username"];
-	$password=$_REQUEST["password"];
+	$username=$_SESSION['username'];
+	$password=$_SESSION['password'];
 	$pagina=$_REQUEST["pagina"];
-	$v=0;
-	$ok=0;
-	if (!$username) 
-	{
-		$v=1;
-	}
-	if(!$password)$v=1;
-	if (	  !preg_match("/1/", $password)&& !preg_match("/2/", $password)&& !preg_match("/3/", $password)
-		&& !preg_match("/4/", $password)&& !preg_match("/5/", $password)&& !preg_match("/6/", $password)
-		&& !preg_match("/7/", $password)&& !preg_match("/8/", $password)&& !preg_match("/9/", $password)
-		&& !preg_match("/0/", $password))$v=1;
-	//conectare la baza de date
-	if($v==1){echo("Nu esti hacker.");}else{
 	$host="localhost";
 	$user="root";
 	$password1="";
@@ -225,9 +213,7 @@
 					Obiecte publice
 					<input type="text" id="myInputt" onkeyup="myFunctionn()" placeholder="Cauta obiecte ...">
 					<form action="/DulApp/userdata.php" method="post">
-						<input type="hidden" name="username" value="<?php echo $username ?>">
-						<input type="hidden" name="password" value="<?php echo $password ?>">
-						<input type="number" name="pagina" min="1" max="12" required value="1"	>
+						<input type="number" name="pagina" min="1" max="12" required value=<?php echo $pagina; ?>	>
 						<input class="button" type="submit" value="Pagina" style="width:auto;"><br>
 					<form>
 						

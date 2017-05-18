@@ -1,14 +1,16 @@
  <?php session_start(); ?>
-<html>
+ <html>
 <head>
 <link rel="icon" type="image/png" href="image/icon.png">
 <link rel="stylesheet" type="text/css" href="css/editare.css">
-<title>Singup</title>
+<title>Editare</title>
 </head>
 <body>
 <div class="log_win">
 <?php 
 	$v=0;
+	$username=$_REQUEST["username"];
+	$_SESION["username"]=$username;
 	$nume=$_REQUEST["nume"];
 	$prenume=$_REQUEST["prenume"];
 	$zi=$_REQUEST["zi"];
@@ -16,6 +18,7 @@
 	$an=$_REQUEST["an"];
 	$sex=$_REQUEST["sex"];
 	$pub=$_REQUEST["pub"];
+	$password=$_REQUEST["password"];
 	$password1=$_REQUEST["password1"];
 	$password2=$_REQUEST["password2"];
    if (!$nume) 
@@ -57,80 +60,70 @@
 	   echo("<p>Nu ai decis daca vrei un cont public sau nu !</p>");
 	   $v=1;
    }
-   $pok=0;
-   if(!$password1 || !$password2)$pok=1;
+   $pok=0;$nul=0;
+   if(!$password1 && !$password2)$nul=1;
    if($password1!=$password2)$pok=1;
    if (	  !preg_match("/1/", $password1)&& !preg_match("/2/", $password1)&& !preg_match("/3/", $password1)
 	   && !preg_match("/4/", $password1)&& !preg_match("/5/", $password1)&& !preg_match("/6/", $password1)
 	   && !preg_match("/7/", $password1)&& !preg_match("/8/", $password1)&& !preg_match("/9/", $password1)
 	   && !preg_match("/0/", $password1))$pok=1;
-   if($pok==1){echo("<p>Parola este gresita !</p>");$v=1;}
-   
+   if($nul==0 && $pok==1){echo("<p>Parolele nu corespund !</p>");$v=1;}
    //conectare la baza de date
 	$host="localhost";
 	$user="root";
-	$password="";
-	$con=mysql_connect($host,$user,$password);
+	$passwordd="";
+	$con=mysql_connect($host,$user,$passwordd);
 	if(!$con) {
-		die('Not connect');
+		die('<p>Not connect</p>');
 	}
 	
 	$bd_selected=mysql_select_db("dulapp", $con);
 	if(!$bd_selected)
 	{
-		die("cant connect");
+		die("<p>Can't connect</p>");
 	}
-
-	$result = mysql_query('select * from userdata order by Id desc LIMIT 1');
-	
-	if(!$result)  die('Error querying database.');
 	$ok=1;
-	if($v==1)echo("<p>Error</p>");else{
+	if($v==1);
+	else{
 		
-		$row = mysql_fetch_assoc($result);
-		$id = $row["Id"]+1;
-		$datanastere=$zi."-".$luna."-".$an;
-		if($sex=="masculin")$sex=1;else $sex=0;
-		if($pub=="da")$pub=1;else $pub=0;
-		$sql = "INSERT INTO userdata (Nume, Prenume, Data_Nastere , Pub ,Sex ,Id)
-		VALUES ('{$nume}', '{$prenume}','{$datanastere}','{$pub}','{$sex}','{$id}')";
-		if (!mysql_query($sql,$con ))
+		$logdata= mysql_query("SELECT * from logdata where username='{$username}' and password='{$password}'");
+		if(mysql_num_rows($logdata) == 1)
 		{
-			echo "Error: " . $sql . "<br>";
-			$ok=0;
-		}
-		$username=$id.".".$nume.".".$prenume;
-		$sql = "INSERT INTO logdata (Id,Username,Password) values ('{$id}','{$username}','{$password1}')";
-		if (!mysql_query($sql,$con ))
-		{
-			echo "Error: " . $sql . "<br>";
-			$ok=0;
-		}
-		if($ok==1){
-		if($sex=="1")
-			echo("<p> Salut ".$prenume.", ai fost inregistrat cu username-ul ".$username);
-		   else  
-			echo("<p> Salut ".$prenume.", ai fost inregistrata cu username-ul ".$username);
-		}else echo("Error");
-	   $_SESSION['username']=$username;
-		$_SESSION['password']=$password1;
-	}
-	if($v!=1)
-	{echo("
-	<form action=\"/DulApp/Login.php\" method=\"post\">
-		<input type=\"hidden\" value=\"1\" name=\"r\">
-		<input type=\"submit\" value=\"Pagina principala\">
-	</form>
-	</div>
-	");
-	}else
-	{echo("
-	<form action=\"/DulApp/Singup.html\" method=\"post\">
-		<input type=\"submit\" value=\"Mai incearca\">
-	</form>
-	</div>
-	");
+			if($nul==0 && $pok==0)$password=$password1;
+			$_SESION["password"]=$password;
+			$_SESION["new"]=1;
+			$row = mysql_fetch_assoc($logdata);
+			$id = $row["Id"];
+			$datanastere=$zi."-".$luna."-".$an;
+			if($sex=="masculin")$sex=1;else $sex=0;
+			if($pub=="da")$pub=1;else $pub=0;
+			$sql = "UPDATE userdata SET
+			Nume ='{$nume}',Prenume= '{$prenume}',Data_Nastere='{$datanastere}',Pub='{$pub}',Sex='{$sex}' 
+			Where Id='{$id}'";
+			if (!mysql_query($sql,$con ))
+			{
+				echo "<p>Error: " . $sql . "</p><br>";
+				$ok=0;
+			}
+			$sql = "UPDATE logdata SET password = '{$password}' where Id='{$id}'";
+			if (!mysql_query($sql,$con ))
+			{
+				echo "<p>Error: " . $sql . "</p><br>";
+				$ok=0;
+			}
+	}else{$pok=0; $ok=0;}
+	
+	if($ok==1){
+				echo("<p> Salut ".$prenume.", datele au fost modificate .</p>");
+			}elseif($pok==1){ echo("<p>Error</p>");}else echo("<p>Parola gresita</p>");
 	}
 ?>
+	
+	<form action="/DulApp/Login.php" method="post">
+		<input type="hidden" value="1" name="r">
+		<input type="submit" value="Pagina principala">
+	</form>
+	</div>
+	
 </body>
 </html>

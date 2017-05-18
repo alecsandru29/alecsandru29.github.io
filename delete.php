@@ -1,6 +1,6 @@
  <html>
 <head>
-<link rel="icon" type="image/png" href="image/login.png">
+<link rel="icon" type="image/png" href="image/icon.png">
 <!--<link rel="stylesheet" type="text/css" href="css/login.css">-->
 <title>Delete</title>
 <script type="text/javascript" src="functii.js"></script>
