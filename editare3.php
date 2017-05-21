@@ -7,7 +7,6 @@
 </head>
 <body>
 <div class="log_win">
-<form action="/DulApp/index.php" method="post">
 	
 	<?php
 	
@@ -37,7 +36,7 @@
 	}
 	?>
 	<p>Cont Sters</p>
-	<form action="/DulApp/Login.php" method="post">
+	<form action="/DulApp/index.php" method="post">
 		<input type="submit" value="Pagina principala">
 	</form>
 	</div>

@@ -94,15 +94,34 @@ function adaugare()
 			x1=1;
 		}
 	}
-function myDelete()
+function myDelete(id)
 {
-	var id;
-	id=document.getElementById("delete");
-	var txt='Doriti sa stergeti elementul ?';
+	
+	id=document.getElementById("delete").value;
+	var txt='Esti sigur ca vrei sa stergi elementul cu id-ul '+id+'?';
 	var r = confirm(txt);
 	if (r == true) {
 		x = "Da";
+		 window.location.href='http://localhost/DulApp/delete.php?id='+id;
 	} else {
 		x = "Nu";
 	}
+}
+function Confirmare() 
+{
+    if (confirm("Esti sigur ca vrei sa stergi contul?") == true) {
+        window.location.href='http://localhost/DulApp/editare3.php'
+    } 
+}
+
+function AdaugareOb()
+{
+	var nume = document.getElementById("nume").value;
+    var valoare = document.getElementById("valoare").value;
+    var material = document.getElementById("material").value;
+	var culoare = document.getElementById("culoare").value;
+	var descriere = document.getElementById("descriere").value;
+	var categorie = document.getElementById("categorie").value;
+	var dulap = document.getElementById("dulap").value;
+    submitOK = "true";
 }

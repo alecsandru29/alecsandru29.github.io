@@ -4,6 +4,7 @@
 <link rel="icon" type="image/png" href="image/icon.png">
 <link rel="stylesheet" type="text/css" href="css/login2.css">
 <title>Login</title>
+<script type="text/javascript" src="functii.js"></script>
 </head>
 <body>
 <?php
@@ -84,16 +85,22 @@
 		<form action="/DulApp/editare.php" method="post">
 		<input type="submit" value="Editare date personale">
 		</form>
-		<form action="/DulApp/editare3.php" method="post">
-		<input type="submit" value="Stergere Cont">
-		</form>
 		<form action="/DulApp/index.php" method="post">
 		<input type="submit" value="Deconectare">
 		</form>
+		<button  class="button" onclick="Confirmare()">Stergere Cont</button >
+		
+
 		<?php
 		echo("</div></div>");
 	}
-	else echo("<p>Username sau parola gresita .</p><br>");
+	else echo("
+	<div class=\"log_win\">
+	<p>Username sau parola gresita .</p><br>
+	<form action=\"/DulApp/index.php\" method=\"post\">
+		<input type=\"submit\" value=\"Pagina principala\">
+	</form>
+	</div>");
 	}
 
 ?>

@@ -6,7 +6,14 @@
 <title>Editare</title>
 </head>
 <body>
+<div id="back">
+<form action="/DulApp/Login.php" method="post" >
+		<input type="hidden" name="r" value=1>
+		<input type="image" src="image/back.png" alt="Submit"  width="48" height="48">
+</form>		
+</div>
 <div class="log_win">
+
 <form action="/DulApp/editare2.php" method="post">
 	
 	<?php
@@ -41,6 +48,7 @@
 		$zi=substr($dn,0,$f);$luna=substr($dn,$f+1,$l-$f-1);$an=substr($dn,-4,4);
 	}
 	?>
+	
 		<input type="text" name="username" value=<?php echo $username;?> readonly><br>
 		<input type="text" name="nume" value=<?php echo $nume;?> required><br>
 		<input type="text" name="prenume" value=<?php echo $prenume;?> required><br>

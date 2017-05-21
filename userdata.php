@@ -7,6 +7,12 @@
 <script type="text/javascript" src="functii.js"></script>
 </head>
 <body>
+<div id="back" >
+		<form action="/DulApp/Login.php" method="post">
+		<input type="hidden" name="r" value=1>
+		<input type="image" src="image/back.png" alt="Submit"  width="48" height="48">
+		</form>
+</div>
 <?php
 	
 	$username=$_SESSION['username'];
@@ -36,10 +42,12 @@
 		$prenume=$row["Prenume"];
 	}
 	else echo("Nu esti hacker.");
-	}
+	
 	if($ok==0){echo("Erori diverse.");}else
 	{
+
 		echo("<div class=\"log_win\"> <div class=\"tt\">");
+		
 		echo("<p> Salut ".$nume." ".$prenume." </p>");
 		$nrobiecte = mysql_query("SELECT * from dataleg where IdUser='{$id}'");
 		$nrcat = mysql_num_rows(mysql_query("SELECT distinct IdCategorie as nrcat from dataleg where IdUser='{$id}'"));
@@ -183,20 +191,27 @@
 		{
 			?>
 			<button  class="button" onclick="adaugare()" >Adauga obiect</button>
-			<form action="/DulApp/userdata.php" method="post" id="adaugare" style="visibility:hidden;">
+			<form action="/DulApp/adaugare.php" method="post" id="adaugare" style="visibility:hidden;">
 				<input type="hidden" name="username" value="<?php echo $username ?>">
 				<input type="hidden" name="password" value="<?php echo $password ?>">
-				<input type="text" name="nume_obiect" placeholder="Nume obiect">
-				<input type="text" name="valoare" placeholder="Valoare"><br>
-				<input type="text" name="material" placeholder="Material">
-				<input type="text" name="culoare" placeholder="Culoare"><br>
-				<input type="text" name="categorie" placeholder="Categorie">
-				<select name="dulap">
+				<input type="text" name="nume_obiect" id="nume_obiect" placeholder="Nume obiect">
+				<input type="text" name="valoare" id="valoare" placeholder="Valoare"><br>
+				<input type="text" name="material" id="material"  placeholder="Material">
+				<input type="text" name="culoare" id="culoare" placeholder="Culoare"><br>
+				<select name="categorie" id="categorie">
+					<option value="c1" selected>Haine</option>
+					<option value="c2" >Bijuterii</option>
+					<option value="c3" >Sport</option>
+					<option value="c4" >Mancare</option>
+					<option value="c5" >Cosmetice</option>
+					<option value="c6" >Papetarie</option>
+				</select>
+				<select name="dulap" id="dulap">
 					<option value="d1" selected>Dulapul I</option>
-					<option value="d2">Dulapul II</option>
-					<option value="d3">Dulapul III</option>
+					<option value="d2" >Dulapul II</option>
+					<option value="d3" >Dulapul III</option>
 				</select><br>
-				<input type="text" name="descriere" placeholder="Descriere" style="height:80px;" maxlength="200">
+				<input type="text" name="descriere" id="descriere" placeholder="Descriere" style="height:80px;" maxlength="200">
 				<input class="button" type="submit" value="Adaugare"><br>
 			</form>
 
@@ -204,7 +219,7 @@
 		}
 		echo("</div>");
 		///tabela publica
-		$resultt = mysql_query("SELECT * FROM userdata join dataleg on userdata.Id=dataleg.IdUser join obiect on dataleg.IdObiect=obiect.Id where Pub=1 and IdUser<40");
+		$resultt = mysql_query("SELECT * FROM userdata join dataleg on userdata.Id=dataleg.IdUser join obiect on dataleg.IdObiect=obiect.Id where Pub=1 and IdObiect<'{$pagina}'*50 and IdObiect >'{$pagina}'*50-50");
 		
 			?>
 			<div class="tr">

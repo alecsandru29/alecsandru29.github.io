@@ -1,14 +1,17 @@
- <html>
+<?php session_start(); ?>
+<html>
 <head>
 <link rel="icon" type="image/png" href="image/icon.png">
-<!--<link rel="stylesheet" type="text/css" href="css/login.css">-->
+<link rel="stylesheet" type="text/css" href="css/editare.css">
 <title>Delete</title>
 <script type="text/javascript" src="functii.js"></script>
 </head>
 <body>
+<div class="log_win">
 <?php
-$username=$_REQUEST["username"];
-	$password=$_REQUEST["password"];
+	$idObiect = intval($_GET['id']);
+	$username=$_SESSION["username"];
+	$password=$_SESSION["password"];
 	$v=0;
 	$ok=0;
 	if (!$username) 
@@ -48,15 +51,25 @@ $username=$_REQUEST["username"];
 	else echo("Nu esti hacker.");
 	}
 	if($ok==0){echo("Erori diverse.");}else
-	{
-		$result = mysql_query("SELECT * FROM obiect join dataleg on obiect.Id=dataleg.IdObiect where IdUser='{$id}'");
-		while($row = mysql_fetch_assoc($result)) 
-			{
-				echo("<form action=\"\">");
-				echo("<input type=\"checkbox\" >".$row["Nume"]."<br>");
-			}	
+	{	$obiect=mysql_query("select * from obiect join dataleg on dataleg.IdObiect=obiect.Id where IdObiect='{$idObiect}' and IdUser='{$id}'");
+		if (mysql_num_rows($obiect) > 0) 
+		{
+		$result = mysql_query("DELETE FROM dataleg where IdUser='{$id}' and IdObiect='{$idObiect}' ");
+		$result = mysql_query("DELETE FROM obiect where Id='{$idObiect}' ");
+		$result = mysql_query("DELETE FROM specs where IdObiect='{$idObiect}' ");
+		$result = mysql_query("DELETE FROM categorie where IdObiect='{$idObiect}' ");
+		echo("<p>Obiectul a fost sters!</p>");
+		
+		}
+		else echo("<p>Obiectul nu exista!</p>");
+		
 	}
 ?>
+<form action="/DulApp/userdata.php" method="post">
+		<input type="hidden" value="1" name="pagina">	
+		<input type="submit" value="Obiecte">
+	</form>
+	</div>
 </form>
 </body>
 </html>
