@@ -17,10 +17,15 @@ body
     height: auto;
 	border-radius: 25px;
 }
+#back
+{
+	width:100px;
+	float:left;
+}
 form
 {
 	position: relative;
-	padding:7% 5% 7% 5%;
+	padding:0% 5% 0% 5%;
 	width: 90%;
 }
 input[type=text],[type=password]
