@@ -1,4 +1,5 @@
 <?php session_start(); ?>
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="icon" type="image/png" href="image/icon.png">
@@ -58,6 +59,22 @@
 		$userdata=mysql_query("SELECT * from userdata where id='{$id}'");
 		$row = mysql_fetch_assoc($userdata);
 		echo("<div class=\"log_win\"><div class=\"t\">");
+		
+		if($id == -723) {
+			?>
+			<div class="text"> Salut admin! </div><br>
+			<form action="/DulApp/admin.php" method="post">
+			<input type="hidden" name="pagina" value=1>
+			<input type="hidden" name="id" value=0>
+			<input type="submit" value="Pagina admin">
+			</form>
+			<form action="/DulApp/index.php" method="post">
+			<input type="submit" value="Deconectare">
+			</form>
+			<?php
+		}
+		else {
+		
 		echo("<div class=\"text\"> Salut ".$row["Nume"]." ".$row["Prenume"]." </div><br>");
 		
 		$dn=$row["Data_Nastere"];
@@ -93,6 +110,7 @@
 
 		<?php
 		echo("</div></div>");
+		}
 	}
 	else echo("
 	<div class=\"log_win\">
@@ -104,5 +122,6 @@
 	}
 
 ?>
+	
 </body>
 </html>

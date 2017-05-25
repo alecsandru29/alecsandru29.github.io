@@ -1,4 +1,5 @@
 <?php session_start(); ?>
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="icon" type="image/png" href="image/icon.png">
@@ -31,7 +32,7 @@
 		&& !preg_match("/7/", $password)&& !preg_match("/8/", $password)&& !preg_match("/9/", $password)
 		&& !preg_match("/0/", $password))$v=1;
 	//conectare la baza de date
-	if($v==1){echo("Nu esti hacker.");}else{
+	if($v==1){echo("<p>Nu esti hacker.</p>");}else{
 	$host="localhost";
 	$user="root";
 	$password1="";
@@ -55,14 +56,15 @@
 		$nume=$row["Nume"];
 		$prenume=$row["Prenume"];
 	}
-	else echo("Nu esti hacker.");
+	else echo("<p>Nu esti hacker.</p>");
 	}
-	if($ok==0){echo("Erori diverse.");}else
+	if($ok==0){echo("<p>Erori diverse.</p>");}else
 	{
 		$result = mysql_query("select * from obiect order by Id desc LIMIT 1");
 		if(!$result)  die('Error querying database.');
 		else
 		{
+			//adaugarea obiectului in baza de date
 			$row = mysql_fetch_assoc($result);
 			$idOb = $row["Id"]+1;
 			if($categorie=="c1") { $categorie=1; $numec="haine";}

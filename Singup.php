@@ -1,4 +1,5 @@
  <?php session_start(); ?>
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="icon" type="image/png" href="image/icon.png">
@@ -108,9 +109,9 @@
 		}
 		if($ok==1){
 		if($sex=="1")
-			echo("<p> Salut ".$prenume.", ai fost inregistrat cu username-ul ".$username);
+			echo("<p> Salut ".$prenume.", ai fost inregistrat cu username-ul ".$username"</p>";
 		   else  
-			echo("<p> Salut ".$prenume.", ai fost inregistrata cu username-ul ".$username);
+			echo("<p> Salut ".$prenume.", ai fost inregistrata cu username-ul ".$username"</p>");
 		}else echo("Error");
 	   $_SESSION['username']=$username;
 		$_SESSION['password']=$password1;

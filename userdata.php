@@ -1,4 +1,5 @@
 <?php session_start(); ?>
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="icon" type="image/png" href="image/icon.png">
@@ -41,9 +42,9 @@
 		$nume=$row["Nume"];
 		$prenume=$row["Prenume"];
 	}
-	else echo("Nu esti hacker.");
+	else echo("<p>Nu esti hacker.</p>");
 	
-	if($ok==0){echo("Erori diverse.");}else
+	if($ok==0){echo("<p>Erori diverse.</p>");}else
 	{
 
 		echo("<div class=\"log_win\"> <div class=\"tt\">");

@@ -113,7 +113,11 @@ function Confirmare()
         window.location.href='http://localhost/DulApp/editare3.php'
     } 
 }
-
+function Trimite()
+{
+	id=document.getElementById("id_user").value;
+	window.location.href='http://localhost/DulApp/admin.php?id='+id;
+}
 function AdaugareOb()
 {
 	var nume = document.getElementById("nume").value;

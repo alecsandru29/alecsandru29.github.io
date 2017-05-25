@@ -1,4 +1,5 @@
 <?php session_start(); ?>
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="icon" type="image/png" href="image/icon.png">
