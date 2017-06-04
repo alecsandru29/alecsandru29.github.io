@@ -94,38 +94,29 @@ function adaugare()
 			x1=1;
 		}
 	}
-function myDelete(id)
+function myDelete()
 {
 	
 	id=document.getElementById("delete").value;
 	var txt='Esti sigur ca vrei sa stergi elementul cu id-ul '+id+'?';
 	var r = confirm(txt);
-	if (r == true) {
-		x = "Da";
+	if (r == true)
 		 window.location.href='http://localhost/DulApp/delete.php?id='+id;
-	} else {
-		x = "Nu";
-	}
+}
+var test=1;
+function obiect(id,nume,culoare,valoare,descriere,categorie,material)
+{
+	var txt="id"+id;
+	var afis=document.getElementById(txt).value;
+	if (test==1)
+	{	document.getElementById(txt).style.visibility = "visible"; test =0;}
+	else
+	{ 	document.getElementById(txt).style.visibility = "hidden"; test=1 }
+	//window.alert(txt);
 }
 function Confirmare() 
 {
     if (confirm("Esti sigur ca vrei sa stergi contul?") == true) {
         window.location.href='http://localhost/DulApp/editare3.php'
     } 
-}
-function Trimite()
-{
-	id=document.getElementById("id_user").value;
-	window.location.href='http://localhost/DulApp/admin.php?id='+id;
-}
-function AdaugareOb()
-{
-	var nume = document.getElementById("nume").value;
-    var valoare = document.getElementById("valoare").value;
-    var material = document.getElementById("material").value;
-	var culoare = document.getElementById("culoare").value;
-	var descriere = document.getElementById("descriere").value;
-	var categorie = document.getElementById("categorie").value;
-	var dulap = document.getElementById("dulap").value;
-    submitOK = "true";
 }
