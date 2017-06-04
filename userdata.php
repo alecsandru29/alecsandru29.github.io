@@ -54,42 +54,41 @@
 		$nrcat = mysql_num_rows(mysql_query("SELECT distinct IdCategorie as nrcat from dataleg where IdUser='{$id}'"));
 		echo ("<p>Ai ".mysql_num_rows($nrobiecte)." obiecte impartite in ".$nrcat." categorii.</p><br></div>");
 		
-		echo("<div class=\"tt\">");
-		echo("<div class=\"tl\">");
-		//Primul dulap
+		//dulap 1
 		$result = mysql_query("SELECT * FROM obiect join dataleg on obiect.Id=dataleg.IdObiect join 
 		specs on specs.IdObiect=dataleg.IdObiect where IdUser='{$id}' and Dulap=1");
 		if (mysql_num_rows($result) > 0) 
 		{
+			$par=mysql_num_rows($result);
+			echo $par;
 			?>
 			<div class="tl">
-			<p>
+			<p>Primul dulap </p>
+			<input type="text" id="myInput1" onkeyup="myFunction1()" placeholder="Cauta obiecte ..."><br>
 			<table id="tabelpersonal1">
-					Primul dulap
-					<input type="text" id="myInput1" onkeyup="myFunction1()" placeholder="Cauta obiecte ..."><br>
-					
-					<tr>
-					<th>Id</th>
-					<th>Nume obiect</th>
-					<th>Valoare</th>
-					<th>Material</th>
-					<th>Culoare</th>
-					<th>Categorie</th>
-				</tr>
 			<?php
+			echo "<tr>";
+			$inti=0;$intii=0;
 			while($row = mysql_fetch_assoc($result)) 
 			{
-				echo "<tr>";
+				$inti++;
+				$intii++;
 				$ido=$row["IdObiect"];
 				$roww = mysql_fetch_assoc(mysql_query("SELECT * FROM categorie where IdObiect='{$ido}'"));
-				echo ("<td>".$row["IdObiect"]."</td><td>".$row["Nume"]."</td><td>" . $row["Valoare"]. "</td><td>" . $row["Material"]."</td><td>".$row["Culoare"]."</td><td>" . $roww["Nume"]."</td>");
-				echo "</tr>";
+				echo ("<td onclick=\"obiect(".$row["Id"].")\"> <div id=\"id".$row["Id"]."\"  style=\"visibility: hidden;\">".$row["Nume"]."</div> </td>");
+				//  <div id=\"id".$row["Id"]."\"  style=\"visibility: hidden;\">".$row["Nume"]."</div>  
+				if($inti==2)
+				{
+					echo "</tr>";
+					if($par/6>=$intii)
+					echo"<tr>";
+					$inti=0;
+					}
 			}
 			echo("</table>");
 			?>
 			<input type="text" id="delete" placeholder="Id">
 			<button onclick="myDelete()">Sterge elementul</button><br>
-			</p>
 			<?php	
 		}else 
 		{
@@ -100,105 +99,16 @@
 			
 		}
 		echo("</div><br>");
-		////Dulapul 2
-		$result = mysql_query("SELECT * FROM obiect join dataleg on obiect.Id=dataleg.IdObiect join 
-		specs on specs.IdObiect=dataleg.IdObiect where IdUser='{$id}' and Dulap=2");
-		if (mysql_num_rows($result) > 0) 
-		{
-			?>
-			<div class="tl">
-			<p>
-			<table id="tabelpersonal2">
-					Al doilea dulap
-					<input type="text" id="myInput2" onkeyup="myFunction2()" placeholder="Cauta obiecte ..."><br>
-					
-					<tr>
-					<th>Id</th>
-					<th>Nume obiect</th>
-					<th>Valoare</th>
-					<th>Material</th>
-					<th>Culoare</th>
-					<th>Categorie</th>
-				</tr>
-			<?php
-			while($row = mysql_fetch_assoc($result)) 
-			{
-				echo "<tr>";
-				$ido=$row["IdObiect"];
-				$roww = mysql_fetch_assoc(mysql_query("SELECT * FROM categorie where IdObiect='{$ido}'"));
-				echo ("<td>".$row["IdObiect"]."</td><td>".$row["Nume"]."</td><td>" . $row["Valoare"]. "</td><td>" . $row["Material"]."</td><td>".$row["Culoare"]."</td><td>" . $roww["Nume"]."</td>");
-				echo "</tr>";
-			}
-			echo("</table>");
-			?>
-			<input type="text" id="delete" placeholder="Id">
-			<button onclick="myDelete()">Sterge elementul</button><br>
-			</p>
-			<?php	
-		}else 
-		{
-			?>
-			<div class="tl">
-			<p>Nu ai obiecte personale in al doilea dulap!</p>
-			<?php
-			
-		}
-		echo("</div><br>");
-		/////Dulapul 3
-		$result = mysql_query("SELECT * FROM obiect join dataleg on obiect.Id=dataleg.IdObiect join 
-		specs on specs.IdObiect=dataleg.IdObiect where IdUser='{$id}' and Dulap=3");
-		if (mysql_num_rows($result) > 0) 
-		{
-			?>
-			<div class="tl">
-			<p>
-			<table id="tabelpersonal3">
-					Al treilea dulap
-					<input type="text" id="myInput3" onkeyup="myFunction3()" placeholder="Cauta obiecte ..."><br>
-					
-					<tr>
-					<th>Id</th>
-					<th>Nume obiect</th>
-					<th>Valoare</th>
-					<th>Material</th>
-					<th>Culoare</th>
-					<th>Categorie</th>
-				</tr>
-			<?php
-			while($row = mysql_fetch_assoc($result)) 
-			{
-				echo "<tr>";
-				$ido=$row["IdObiect"];
-				$roww = mysql_fetch_assoc(mysql_query("SELECT * FROM categorie where IdObiect='{$ido}'"));
-				echo ("<td>".$row["IdObiect"]."</td><td>".$row["Nume"]."</td><td>" . $row["Valoare"]. "</td><td>" . $row["Material"]."</td><td>".$row["Culoare"]."</td><td>" . $roww["Nume"]."</td>");
-				echo "</tr>";
-			}
-			echo("</table>");
-			?>
-			<input type="text" id="delete" placeholder="Id">
-			<button onclick="myDelete()">Sterge elementul</button><br>
-			</p>
-			<?php	
-		}else 
-		{
-			?>
-			<div class="tl">
-			<p>Nu ai obiecte personale in al treilea dulap!</p>
-			<?php
-			
-		}
-		echo("</div><br>");
-		if(mysql_num_rows($result) < 25)
-		{
+		
+		// /dulap1
+		
 			?>
 			<button  class="button" onclick="adaugare()" >Adauga obiect</button>
 			<form action="/DulApp/adaugare.php" method="post" id="adaugare" style="visibility:hidden;">
-				<input type="hidden" name="username" value="<?php echo $username ?>">
-				<input type="hidden" name="password" value="<?php echo $password ?>">
-				<input type="text" name="nume_obiect" id="nume_obiect" placeholder="Nume obiect">
-				<input type="text" name="valoare" id="valoare" placeholder="Valoare"><br>
-				<input type="text" name="material" id="material"  placeholder="Material">
-				<input type="text" name="culoare" id="culoare" placeholder="Culoare"><br>
+				<input type="text" name="nume_obiect" id="nume_obiect" placeholder="Nume obiect" required>
+				<input type="text" name="valoare" id="valoare" placeholder="Valoare" required><br>
+				<input type="text" name="material" id="material"  placeholder="Material" required>
+				<input type="text" name="culoare" id="culoare" placeholder="Culoare" required><br>
 				<select name="categorie" id="categorie">
 					<option value="c1" selected>Haine</option>
 					<option value="c2" >Bijuterii</option>
@@ -217,40 +127,7 @@
 			</form>
 
 			<?php
-		}
-		echo("</div>");
-		///tabela publica
-		$resultt = mysql_query("SELECT * FROM userdata join dataleg on userdata.Id=dataleg.IdUser join obiect on dataleg.IdObiect=obiect.Id where Pub=1 and IdObiect<'{$pagina}'*50 and IdObiect >'{$pagina}'*50-50");
 		
-			?>
-			<div class="tr">
-			<p>
-			<table id="tabelpublic">
-					Obiecte publice
-					<input type="text" id="myInputt" onkeyup="myFunctionn()" placeholder="Cauta obiecte ...">
-					<form action="/DulApp/userdata.php" method="post">
-						<input type="number" name="pagina" min="1" max="12" required value=<?php echo $pagina; ?>	>
-						<input class="button" type="submit" value="Pagina" style="width:auto;"><br>
-					<form>
-						
-					<tr>
-					<th>Nume obiect</th>
-					<th>Valoare</th>
-					<th>Material</th>
-					<th>Culoare</th>
-					<th>Categorie</th>
-				</tr>
-			<?php
-			while($row = mysql_fetch_assoc($resultt)) 
-			{
-				echo "<tr>";
-				$ido=$row["IdObiect"];
-				$roww = mysql_fetch_assoc(mysql_query("SELECT * FROM categorie where IdObiect='{$ido}'"));
-				echo ("<td>".$row["Nume"]."</td><td>" . $row["Valoare"]. "</td><td>" . $row["Material"]."</td><td>".$row["Culoare"]."</td><td>" . $roww["Nume"]."</td>");
-				echo "</tr>";
-			}
-			echo("</table>");	
-		echo("</div></div></div></div>");
 	}
 ?>
 </body>
