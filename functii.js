@@ -1,63 +1,4 @@
-function myFunction1() {
-  // Declare variables 
-  var input, filter, table, tr, td, i;
-  input = document.getElementById("myInput1");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("tabelpersonal1");
-  tr = table.getElementsByTagName("tr");
 
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    } 
-  }
-}
-function myFunction2() {
-  // Declare variables 
-  var input, filter, table, tr, td, i;
-  input = document.getElementById("myInput2");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("tabelpersonal2");
-  tr = table.getElementsByTagName("tr");
-
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    } 
-  }
-}
-function myFunction3() {
-  // Declare variables 
-  var input, filter, table, tr, td, i;
-  input = document.getElementById("myInput3");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("tabelpersonal3");
-  tr = table.getElementsByTagName("tr");
-
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
-    if (td) {
-      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    } 
-  }
-}
 function myFunctionn() {
   // Declare variables 
   var input, filter, table, tr, td, i;
@@ -103,15 +44,24 @@ function myDelete()
 	if (r == true)
 		 window.location.href='http://localhost/DulApp/delete.php?id='+id;
 }
-var test=1;
-function obiect(id,nume,culoare,valoare,descriere,categorie,material)
+var test=1;	
+function obiect(id)
 {
 	var txt="id"+id;
 	var afis=document.getElementById(txt).value;
 	if (test==1)
-	{	document.getElementById(txt).style.visibility = "visible"; test =0;}
+	{
+		document.getElementById("id").style.visibility = "visible";
+		document.getElementById(txt).style.visibility = "visible"; 
+		test =0;
+		last=txt;
+	}
 	else
-	{ 	document.getElementById(txt).style.visibility = "hidden"; test=1 }
+	{ 	
+		document.getElementById("id").style.visibility = "hidden"; 
+		document.getElementById(txt).style.visibility = "hidden"; 
+		test=1;
+	}
 	//window.alert(txt);
 }
 function Confirmare() 

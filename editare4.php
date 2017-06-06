@@ -7,6 +7,13 @@
 <title>Editare</title>
 </head>
 <body>
+<div id="back">
+<form action="/DulApp/admin.php" method="post" >
+		<input type="hidden" name="id" value=0>
+		<input type="hidden" name="pagina" value=1>
+		<input type="image" src="image/back.png" alt="Submit"  width="48" height="48">
+</form>		
+</div>
 <div class="log_win">
 <?php 
 	$v=0;
@@ -134,6 +141,12 @@
 		{
 			mysql_query("DELETE FROM userdata WHERE Id = '{$id_user}'");
 			mysql_query("DELETE FROM logdata WHERE Id = '{$id_user}'");	
+			$row=mysql_fetch_assoc(mysql_query("SELECT * from dataleg where IdUser='{$id_user}'"));
+			$id = $row["IdObiect"];
+			mysql_query("DELETE FROM logdata WHERE IdObiect = '{$id}'");
+			mysql_query("DELETE FROM lspecs WHERE Id = '{$id}'");
+			mysql_query("DELETE FROM categorie WHERE Id = '{$id}'");
+			mysql_query("DELETE FROM obiect WHERE Id = '{$id}'");
 			echo("<p>Cont sters!</p>");
 		}
 	}

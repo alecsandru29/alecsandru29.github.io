@@ -3,11 +3,17 @@
 <html>
 <head>
 <link rel="icon" type="image/png" href="image/icon.png">
-<link rel="stylesheet" type="text/css" href="css/editare.css">
+<link rel="stylesheet" type="text/css" href="css/admin.css">
 <title>Pagina admin</title>
 <script type="text/javascript" src="functii.js"></script>
 </head>
 <body>
+<div id="back">
+<form action="/DulApp/Login.php" method="post" >
+		<input type="hidden" name="r" value=1>
+		<input type="image" src="image/back.png" alt="Submit"  width="48" height="48">
+</form>		
+</div>
 <div class="log_win">
 <?php
 	$pagina=$_REQUEST["pagina"];
@@ -58,11 +64,11 @@
 		{
 		?>
 		<div class="tl">
+		
+			<p>Obiecte publice</p><br>
 		<form action="/DulApp/admin.php" method="post">
 		<input type="hidden" name="pagina" value=1>
 		<input type="text" name="id" id="id" placeholder="Cauta un user..." required>
-	
-		
 		<input type="submit" value="Vezi toate informatiile"><br>
 		</form>
 		</div>
@@ -70,15 +76,15 @@
 		<?php
 		//afisarea obiectelor
 		$resultt = mysql_query("SELECT * FROM userdata join dataleg on userdata.Id=dataleg.IdUser join obiect on dataleg.IdObiect=obiect.Id and IdObiect<'{$pagina}'*50 and IdObiect >'{$pagina}'*50-50");
-			?>
-			<p>
-			<table id="tabelpublic">Obiecte publice
-					<input type="text" id="myInputt" onkeyup="myFunctionn()" placeholder="Cauta obiecte ...">
+			?>	
+			
+			<table id="tabelpublic">
 					<form action="/DulApp/admin.php" method="post">
+						<input type="hidden" name="id" id="id" value=0>
 						<input type="number" name="pagina" min="1" max="12" required value=<?php echo $pagina; ?>	>
-						<input class="button" type="submit" value="Pagina" style="width:auto;"><br>
-					<form>
-						
+						<input class="button" type="submit" value="Pagina" style="width:auto;">
+					</form>
+						<input type="text" id="myInputt" onkeyup="myFunctionn()" placeholder="Cauta obiecte ...">
 					<tr>
 					<th>Nume obiect</th>
 					<th>Valoare</th>
@@ -123,7 +129,7 @@
 				<input type="text" name="username" value=<?php echo $usernameus;?> readonly><br>
 				<input type="text" name="nume" value=<?php echo $nume;?> required><br>
 				<input type="text" name="prenume" value=<?php echo $prenume;?> required><br>
-				<p>Sex : <select name="sex" id="sex">
+				<p style="width:450px;">Sex : <select name="sex" id="sex">
 				<option value="masculin" <?php if($row["Sex"]==1)echo "selected" ;?>>Masculin</option>
 				<option value="feminin"  <?php if($row["Sex"]==0)echo "selected" ;?>>Feminin</option>
 				</select><br>
@@ -152,7 +158,7 @@
 				if (mysql_num_rows($result) > 0) 
 				{
 					?>
-					<div class="tr"><p><table id="tabeluser">Obiectele utilizatorului
+					<div class="tr"><table id="tabeluser"><p>Obiectele utilizatorului</p>
 					<input type="text" id="myInput1" onkeyup="myFunction1()" placeholder="Cauta obiecte ..."><br>
 					<tr>
 					<th>Id</th>
@@ -178,7 +184,6 @@
 				<input type="hidden" name="userId" value=<?php echo $id_user;?>>
 				<input type="hidden" name="verifica" value=3>
 				<input type="submit" value="Sterge obiectul"><br>
-				</p>
 				<?php	
 			}else 
 			{

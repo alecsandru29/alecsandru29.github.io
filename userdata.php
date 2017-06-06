@@ -8,6 +8,7 @@
 <script type="text/javascript" src="functii.js"></script>
 </head>
 <body>
+<div id="id"></div>
 <div id="back" >
 		<form action="/DulApp/Login.php" method="post">
 		<input type="hidden" name="r" value=1>
@@ -46,25 +47,46 @@
 	
 	if($ok==0){echo("<p>Erori diverse.</p>");}else
 	{
-
+		
 		echo("<div class=\"log_win\"> <div class=\"tt\">");
 		
 		echo("<p> Salut ".$nume." ".$prenume." </p>");
 		$nrobiecte = mysql_query("SELECT * from dataleg where IdUser='{$id}'");
 		$nrcat = mysql_num_rows(mysql_query("SELECT distinct IdCategorie as nrcat from dataleg where IdUser='{$id}'"));
-		echo ("<p>Ai ".mysql_num_rows($nrobiecte)." obiecte impartite in ".$nrcat." categorii.</p><br></div>");
+		echo ("<p>Ai ".mysql_num_rows($nrobiecte)." obiecte impartite in ".$nrcat." categorii.</p></div>");
 		
 		//dulap 1
 		$result = mysql_query("SELECT * FROM obiect join dataleg on obiect.Id=dataleg.IdObiect join 
-		specs on specs.IdObiect=dataleg.IdObiect where IdUser='{$id}' and Dulap=1");
+		specs on specs.IdObiect=dataleg.IdObiect where IdUser='{$id}' and Dulap='{$pagina}'");
 		if (mysql_num_rows($result) > 0) 
 		{
 			$par=mysql_num_rows($result);
-			echo $par;
 			?>
+			
+			<?php 
+			if($pagina==1)echo("<p>Primul dulap </p><br>");
+			else if($pagina==2)echo("<p>Al doilea dulap </p><br>");
+				 else echo("<p>Al treilea dulap </p><br>");
+			?>
+			<div id="cifre">
+			<div id="numar" >
+			<form action="/DulApp/userdata.php" method="post">
+				<input type="hidden" name="pagina" value=1>
+				<input type="image" src="image/1.png" alt="Submit"  width="50" height="50">
+				</form>
+			</div><div id="numar" >
+			<form action="/DulApp/userdata.php" method="post">
+				<input type="hidden" name="pagina" value=2>
+				<input type="image" src="image/2.png" alt="Submit"  width="50" height="50">
+				</form>
+			</div><div id="numar" >
+			<form action="/DulApp/userdata.php" method="post">
+				<input type="hidden" name="pagina" value=3>
+				<input type="image" src="image/3.png" alt="Submit"  width="50" height="50">
+				</form>
+			</div>
+			</div><br>
 			<div class="tl">
-			<p>Primul dulap </p>
-			<input type="text" id="myInput1" onkeyup="myFunction1()" placeholder="Cauta obiecte ..."><br>
 			<table id="tabelpersonal1">
 			<?php
 			echo "<tr>";
@@ -75,7 +97,15 @@
 				$intii++;
 				$ido=$row["IdObiect"];
 				$roww = mysql_fetch_assoc(mysql_query("SELECT * FROM categorie where IdObiect='{$ido}'"));
-				echo ("<td onclick=\"obiect(".$row["Id"].")\"> <div id=\"id".$row["Id"]."\"  style=\"visibility: hidden;\">".$row["Nume"]."</div> </td>");
+				$rrow = mysql_fetch_assoc(mysql_query("SELECT * FROM specs where IdObiect='{$ido}'"));
+				echo ("<td onclick=\"obiect(".$row["Id"].")\">
+				<div id=\"id".$row["Id"]."\"  
+				style=\"visibility: hidden; position:fixed; top:200px; left:575px;background-color:#4CAF50;border-radius: 7px;height:300px; width:200px;text-align: left;z-index:15;
+				 font-size:16px;font-weight: bold; color:white;\">"
+				."Id: ".$row["Id"]."<br>Nume: ".$row["Nume"]."<br>Culoare: ".$row["Culoare"]."<br>Material: ".$row["Material"]."<br>Valoare: ".$row["Valoare"]."<br>Categorie: ".
+				$roww["Nume"]."<br>Data adaugare: ".$rrow["data_adaugare"]."<br>Specificatii: ".$rrow["Descriere"].
+				"</div> 
+				</td>");
 				//  <div id=\"id".$row["Id"]."\"  style=\"visibility: hidden;\">".$row["Nume"]."</div>  
 				if($inti==2)
 				{
@@ -87,8 +117,10 @@
 			}
 			echo("</table>");
 			?>
+			<div id="del">
 			<input type="text" id="delete" placeholder="Id">
-			<button onclick="myDelete()">Sterge elementul</button><br>
+			<button onclick="myDelete()">Sterge elementul</button>
+			</div>
 			<?php	
 		}else 
 		{
@@ -98,12 +130,17 @@
 			<?php
 			
 		}
-		echo("</div><br>");
+		echo("</div>");
 		
 		// /dulap1
 		
 			?>
+			<div id="add">
 			<button  class="button" onclick="adaugare()" >Adauga obiect</button>
+			<form action="/DulApp/publice.php" method="post">
+				<input type="hidden" name="pagina" value=1>
+				<input class="button" type="submit" value="Pagina publica">
+			</form>
 			<form action="/DulApp/adaugare.php" method="post" id="adaugare" style="visibility:hidden;">
 				<input type="text" name="nume_obiect" id="nume_obiect" placeholder="Nume obiect" required>
 				<input type="text" name="valoare" id="valoare" placeholder="Valoare" required><br>
@@ -125,7 +162,7 @@
 				<input type="text" name="descriere" id="descriere" placeholder="Descriere" style="height:80px;" maxlength="200">
 				<input class="button" type="submit" value="Adaugare"><br>
 			</form>
-
+			</div>
 			<?php
 		
 	}

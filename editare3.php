@@ -34,6 +34,13 @@
 		$id = $row["Id"];
 		mysql_query("DELETE FROM userdata WHERE Id = '{$id}'");
 		mysql_query("DELETE FROM logdata WHERE Id = '{$id}'");
+		$row=mysql_fetch_assoc(mysql_query("SELECT * from dataleg where IdUser='{$id}'"));
+		$id = $row["IdObiect"];
+		mysql_query("DELETE FROM logdata WHERE IdObiect = '{$id}'");
+		mysql_query("DELETE FROM lspecs WHERE Id = '{$id}'");
+		mysql_query("DELETE FROM categorie WHERE Id = '{$id}'");
+		mysql_query("DELETE FROM obiect WHERE Id = '{$id}'");
+		
 	}
 	?>
 	<p>Cont Sters</p>
