@@ -71,6 +71,11 @@
 		<input type="password" name="password2" placeholder="Introduceti parola noua din nou"><br>
 		<input type="submit" value="Modificare date">	
 </form>
+<div id="help" >
+		<form action="/DulApp/help.html" method="post">
+		<input type="image" src="image/help.png" alt="Submit"  width="48" height="48">
+		</form>
+</div>
 </div>
 </body> 
 </html>

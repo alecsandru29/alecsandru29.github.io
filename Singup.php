@@ -133,5 +133,10 @@
 	");
 	}
 ?>
+<div id="help" >
+		<form action="/DulApp/help.html" method="post">
+		<input type="image" src="image/help.png" alt="Submit"  width="48" height="48">
+		</form>
+</div>
 </body>
 </html>

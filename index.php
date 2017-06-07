@@ -21,5 +21,10 @@ session_destroy();
 		<p>Nu ai cont ? Creeaza unul apasand <a href="Singup.html">aici</a>.</p>
 </form>
 </div>
+<div id="help" >
+		<form action="/DulApp/help.html" method="post">
+		<input type="image" src="image/help.png" alt="Submit"  width="48" height="48">
+		</form>
+</div>
 </body>
 </html>
