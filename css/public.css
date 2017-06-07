@@ -123,3 +123,9 @@ img {
 	width:100px;
 	float:left;
 }
+#help
+{
+	position:fixed;
+	bottom:10px;
+	right:10px;
+}

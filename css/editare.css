@@ -109,3 +109,9 @@ a:hover {
     color: white;
 	text-decoration: none;
 }
+#help
+{
+	position:fixed;
+	bottom:10px;
+	right:10px;
+}
